@@ -4,7 +4,7 @@ metadata:
   name: linkding
 spec:
   replicas: 1
-  selector: 
+  selector:
     matchLabels:
       app: linkding
   template:
@@ -28,7 +28,7 @@ spec:
             - containerPort: 9090
           envFrom:
             - secretRef:
-              name: linkding-container-env
+                name: linkding-container-env
       volumes:
         - name: linkding-volume
           persistentVolumeClaim:
