@@ -1,0 +1,39 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plex
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: plex-media-server
+      sourceRef:
+        kind: HelmRepository
+        name: plex
+  values:
+    nodeSelector:
+      kubernetes.io/hostname: old-white-worker
+
+    # Pod runs in the hosts's network namespace
+    hostNetwork: true
+    dnsPolicy: "ClusterFirstWithHostNet"
+
+    pms:
+      configExistingClaim: "plex-config-pvc"
+      # configStorage: 10Gi
+      # storageClassName left unset — uses your cluster default (local-path), same as mealie/linkding
+      # configExistingClaim left unset — no old config to reuse, this is genuinely fresh
+
+    extraVolumes:
+      - name: media
+        hostPath:
+          path: /data/plex/media
+    extraVolumeMounts:
+      - name: media
+        mountPath: /data/plex/media
+
+    extraEnv:
+      # PLEX_CLAIM: "ephemeral, applied the first time and removd it already"
+      TZ: "America/Sao_Paulo"
+      PLEX_UID: "1000"
+      PLEX_GID: "100"
