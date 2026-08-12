@@ -3,6 +3,6 @@ kind: Kustomization
 namespace: linkding
 resources:
   - ../../base/linkding/
-  - cloudflare.yaml
+  #  - cloudflare.yaml
   - secret.yaml
   - container-env-secret.yaml
