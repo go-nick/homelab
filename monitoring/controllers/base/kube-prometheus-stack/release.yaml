@@ -29,3 +29,22 @@ spec:
   values:
     grafana:
       adminPassword: admin
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+
+    prometheus:
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+
+    alertmanager:
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+
+    prometheusOperator:
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+
+    kube-state-metrics:
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+
