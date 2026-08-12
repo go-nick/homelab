@@ -33,12 +33,14 @@ spec:
         kubernetes.io/hostname: beelink-master
 
     prometheus:
-      nodeSelector:
-        kubernetes.io/hostname: beelink-master
+      prometheusSpec:
+        nodeSelector:
+          kubernetes.io/hostname: beelink-master
 
     alertmanager:
-      nodeSelector:
-        kubernetes.io/hostname: beelink-master
+      alertmanagerSpec:
+        nodeSelector:
+          kubernetes.io/hostname: beelink-master
 
     prometheusOperator:
       nodeSelector:
