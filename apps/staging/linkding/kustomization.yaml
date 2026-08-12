@@ -6,3 +6,4 @@ resources:
   #  - cloudflare.yaml
   - secret.yaml
   - container-env-secret.yaml
+  - ingress.yaml
