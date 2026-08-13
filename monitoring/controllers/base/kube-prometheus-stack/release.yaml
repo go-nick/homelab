@@ -39,9 +39,10 @@ spec:
         ingressClassName: traefik
         hosts:
           - local.grafana.nicklab.org
-          
-        #path: / 
-        #tls: 
+        tls:
+          - secretName: grafana-tls-secret
+            hosts:
+              - local.grafana.nicklab.org
 
     prometheus:
       prometheusSpec:
