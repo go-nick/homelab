@@ -1,0 +1,11 @@
+
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: homarr
+  namespace: homarr
+spec:
+  interval: 1h
+  url: oci://ghcr.io/homarr-labs/charts/homarr 
+  ref:
+    tag: 8.26.0

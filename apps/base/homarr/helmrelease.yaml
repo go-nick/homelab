@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: homarr
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: homarr
+  values:
+    nodeSelector:
+      kubernetes.io/hostname: beelink-master
+    persistence:
+      homarrDatabase:
+        enabled: true
+        volumeClaimName: "homarr-pv" # <- PV name, not PVC
+        mountPath: "/appdata" # mount path inside the pod
+        storageClassName: "" # needed
+
+    ingress:
+      enabled: true 
+      ingressClassName: "traefik"
+      hosts:
+        - host: homarr.nicklab.org
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: homarr
+                  port:
+                    number: 7575 # service port, can change but keep the same as the containerPort for sanity
+
+    # for visual inspection - not needed
+    service:
+      enabled: true 
+      type: ClusterIP
+      ports:
+        app:
+          port: 7575       # match container port for keeping sanity
+          targetPort: http
+          protocol: TCP 
+
+    # same as the service
+    containerPorts:
+      http:
+        port: 7575      # default option, never change this, explicit only for debugging
+        protocol: TCP
+
+    envSecrets:
+      dbEncryption:
+        existingSecret: "db-encryption"
+        key: "db-encryption-key"
