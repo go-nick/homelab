@@ -1,0 +1,15 @@
+nodeSelector:
+  kubernetes.io/hostname: beelink-master
+persistence:
+  homarrDatabase:
+    enabled: true
+    volumeClaimName: "homarr-pv" # <- PV name, not PVC
+    mountPath: "/appdata" # mount path inside the pod
+    storageClassName: "" # needed
+ingress:
+  enabled: true
+  ingressClassName: "traefik"
+  hosts:
+    - host: homarr.nicklab.org
+      paths:
+        - path: /

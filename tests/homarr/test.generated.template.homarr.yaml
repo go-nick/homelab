@@ -1,0 +1,201 @@
+---
+# Source: homarr/templates/homarr-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homarr-database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 50Mi
+  volumeName: "homarr-pv"
+---
+# Source: homarr/templates/homarr-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: homarr
+  labels:
+    helm.sh/chart: homarr-8.26.0
+    app.kubernetes.io/name: homarr
+    app.kubernetes.io/instance: homarr
+    app.kubernetes.io/version: "v1.74.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: app
+      port: 7575
+      protocol: TCP
+      targetPort: http
+  selector:
+    app.kubernetes.io/name: homarr
+    app.kubernetes.io/instance: homarr
+---
+# Source: homarr/templates/homarr-dc.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homarr
+  labels:
+    helm.sh/chart: homarr-8.26.0
+    app.kubernetes.io/name: homarr
+    app.kubernetes.io/instance: homarr
+    app.kubernetes.io/version: "v1.74.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: homarr
+      app.kubernetes.io/instance: homarr
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: homarr-8.26.0
+        app.kubernetes.io/name: homarr
+        app.kubernetes.io/instance: homarr
+        app.kubernetes.io/version: "v1.74.0"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      securityContext:
+        {}
+
+      containers:
+        - name: homarr
+          securityContext:
+            {}
+          image: "ghcr.io/homarr-labs/homarr:v1.74.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 7575
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health/live
+              port: 7575
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/health/ready
+              port: 7575
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+          env:
+            - name: ENABLE_DOCKER
+              value: "false"
+            - name: ENABLE_KUBERNETES
+              value: "false"
+            - name: AUTH_COOKIE_PREFIX
+              value: "homarr"
+            - name: AUTH_LDAP_BASE
+              value: ""
+            - name: AUTH_LDAP_BIND_DN
+              value: ""
+            - name: AUTH_LDAP_GROUP_CLASS
+              value: "groupOfUniqueNames"
+            - name: AUTH_LDAP_GROUP_FILTER_EXTRA_ARG
+              value: ""
+            - name: AUTH_LDAP_GROUP_MEMBER_ATTRIBUTE
+              value: "member"
+            - name: AUTH_LDAP_GROUP_MEMBER_USER_ATTRIBUTE
+              value: "dn"
+            - name: AUTH_LDAP_SEARCH_SCOPE
+              value: "base"
+            - name: AUTH_LDAP_URI
+              value: ""
+            - name: AUTH_LDAP_USERNAME_ATTRIBUTE
+              value: "uid"
+            - name: AUTH_LDAP_USERNAME_FILTER_EXTRA_ARG
+              value: ""
+            - name: AUTH_LDAP_USER_MAIL_ATTRIBUTE
+              value: "mail"
+            - name: AUTH_LOGOUT_REDIRECT_URL
+              value: ""
+            - name: AUTH_OIDC_AUTO_LOGIN
+              value: "false"
+            - name: AUTH_OIDC_CLIENT_NAME
+              value: "OIDC"
+            - name: AUTH_OIDC_GROUPS_ATTRIBUTE
+              value: "groups"
+            - name: AUTH_OIDC_ISSUER
+              value: ""
+            - name: AUTH_OIDC_NAME_ATTRIBUTE_OVERWRITE
+              value: ""
+            - name: AUTH_OIDC_SCOPE_OVERWRITE
+              value: "openid email profile groups"
+            - name: AUTH_PROVIDERS
+              value: "credentials"
+            - name: AUTH_SESSION_EXPIRY_TIME
+              value: "30d"
+            - name: ENABLE_DNS_CACHING
+              value: "false"
+            - name: LOG_LEVEL
+              value: "info"
+            - name: NO_EXTERNAL_CONNECTION
+              value: "false"
+            - name: TZ
+              value: "Europe/Paris"
+            - name: DB_MIGRATIONS_DISABLED
+              value: "false"
+            - name: DB_DRIVER
+              value: "better-sqlite3"
+            - name: DB_DIALECT
+              value: "sqlite"
+            - name: DB_URL
+              value: "/appdata/db.sqlite"
+            - name: SECRET_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: db-encryption
+                  key: db-encryption-key
+
+          resources:
+            {}
+          volumeMounts:
+            - name: homarr-database
+              mountPath: /appdata
+
+      volumes:
+        - name: homarr-database
+          persistentVolumeClaim:
+            claimName: homarr-database
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+---
+# Source: homarr/templates/homarr-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homarr
+  labels:
+    helm.sh/chart: homarr-8.26.0
+    app.kubernetes.io/name: homarr
+    app.kubernetes.io/instance: homarr
+    app.kubernetes.io/version: "v1.74.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: "homarr.nicklab.org"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homarr
+                port:
+                  number: 7575
