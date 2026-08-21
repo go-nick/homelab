@@ -37,3 +37,53 @@ spec:
         existingClaim: "prowlarr-pvc"
         globalMounts:
           - path: /config
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sabnzbd
+  namespace: rrstack
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: sabnzbd
+  values:
+    nodeSelector:
+      kubernetes.io/hostname: old-white-worker
+
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: lscr.io/linuxserver/sabnzbd
+              tag: latest
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: "America/Sao_Paulo"
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        existingClaim: "sabnzbd-pvc"
+        globalMounts:
+          - path: /config
+      incomplete:
+        type: persistentVolumeClaim
+        existingClaim: "usenet-incomplete-pvc"
+        globalMounts:
+          - path: /incomplete-downloads
+      downloads:
+        type: persistentVolumeClaim
+        existingClaim: "usenet-complete-pvc"
+        globalMounts:
+          - path: /downloads
