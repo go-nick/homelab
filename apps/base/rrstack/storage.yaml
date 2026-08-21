@@ -113,3 +113,94 @@ spec:
   resources:
     requests:
       storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/rrstack/radarr
+  claimRef:
+    name: radarr-pvc
+    namespace: rrstack
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-pvc
+  namespace: rrstack
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-movies-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/plex/media/movies
+  claimRef:
+    name: radarr-movies-pvc
+    namespace: rrstack
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-movies-pvc
+  namespace: rrstack
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+---
+# Same underlying disk path as usenet-complete-pv (SABnzbd's output) — separate
+# PV/PVC pair so Radarr can mount it independently, both binding to the same
+# real directory on old-white-worker's disk. Required so Radarr can find and
+# hardlink finished downloads into radarr-movies-pv (same filesystem).
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-downloads-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/usenet/complete
+  claimRef:
+    name: radarr-downloads-pvc
+    namespace: rrstack
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-downloads-pvc
+  namespace: rrstack
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

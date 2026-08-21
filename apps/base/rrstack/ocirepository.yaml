@@ -25,3 +25,17 @@ spec:
   layerSelector:
     mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
     operation: extract
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: radarr
+  namespace: rrstack
+spec:
+  interval: 1h
+  url: oci://ghcr.io/bjw-s-labs/helm/app-template
+  ref:
+    tag: "5.1.0"
+  layerSelector:
+    mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+    operation: extract

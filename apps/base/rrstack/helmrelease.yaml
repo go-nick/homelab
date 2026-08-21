@@ -94,3 +94,53 @@ spec:
         existingClaim: "usenet-complete-pvc"
         globalMounts:
           - path: /downloads
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: radarr
+  namespace: rrstack
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: radarr
+  values:
+    nodeSelector:
+      kubernetes.io/hostname: old-white-worker
+
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: lscr.io/linuxserver/radarr
+              tag: latest
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: "America/Sao_Paulo"
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 7878
+
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        existingClaim: "radarr-pvc"
+        globalMounts:
+          - path: /config
+      movies:
+        type: persistentVolumeClaim
+        existingClaim: "radarr-movies-pvc"
+        globalMounts:
+          - path: /movies
+      downloads:
+        type: persistentVolumeClaim
+        existingClaim: "radarr-downloads-pvc"
+        globalMounts:
+          - path: /downloads
