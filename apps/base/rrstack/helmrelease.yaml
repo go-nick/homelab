@@ -63,6 +63,13 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: "America/Sao_Paulo"
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - "sed -i 's/^host_whitelist.*/host_whitelist = local.sabnzbd.nicklab.org/' /config/sabnzbd.ini 2>/dev/null || true"
 
     service:
       main:
