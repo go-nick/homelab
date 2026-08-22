@@ -144,3 +144,53 @@ spec:
         existingClaim: "radarr-downloads-pvc"
         globalMounts:
           - path: /downloads
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sonarr
+  namespace: rrstack
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: sonarr
+  values:
+    nodeSelector:
+      kubernetes.io/hostname: old-white-worker
+
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: lscr.io/linuxserver/sonarr
+              tag: latest
+            env:
+              PUID: "1000"
+              PGID: "1000"
+              TZ: "America/Sao_Paulo"
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8989
+
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        existingClaim: "sonarr-pvc"
+        globalMounts:
+          - path: /config
+      tv:
+        type: persistentVolumeClaim
+        existingClaim: "sonarr-tv-pvc"
+        globalMounts:
+          - path: /tv
+      downloads:
+        type: persistentVolumeClaim
+        existingClaim: "sonarr-downloads-pvc"
+        globalMounts:
+          - path: /downloads
