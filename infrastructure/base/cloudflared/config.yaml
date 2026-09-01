@@ -15,6 +15,8 @@ data:
     no-autoupdate: true
 
     ingress:
+    - hostname: mealie.nicklab.org
+      service: http://traefik.kube-system.svc.cluster.local:80
     - hostname: linkding.nicklab.org
       service: http://traefik.kube-system.svc.cluster.local:80
     - hostname: homarr.nicklab.org
