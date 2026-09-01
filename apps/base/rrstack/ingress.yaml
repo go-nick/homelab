@@ -34,7 +34,7 @@ spec:
               service:
                 name: sabnzbd
                 port:
-                  number: 8080
+                  name: s-p-sabnzbd
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

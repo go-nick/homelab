@@ -75,7 +75,7 @@ spec:
       main:
         controller: main
         ports:
-          http:
+          s-p-sabnzbd:
             port: 8080
 
     persistence:
