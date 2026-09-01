@@ -28,7 +28,7 @@ spec:
       main:
         controller: main
         ports:
-          prowlarr-port:
+          s-p-prowlarr:
             port: 9696
 
     persistence:

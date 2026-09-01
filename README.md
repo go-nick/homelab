@@ -60,3 +60,12 @@ homelab/
 │   └── configs/
 └── tests/                      # validation before promotion
 ```
+
+## Design Patterns
+
+All ports must be named following the pattern: 
+```
+s-p-<app> # service port names
+c-p-<app> # container port names
+```
+
