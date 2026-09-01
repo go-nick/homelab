@@ -7,10 +7,10 @@ metadata:
   namespace: mealie
 spec:
   ports:
-  - name: 9000-9000
+  - name: s-p-mealie
     port: 9000
     protocol: TCP
-    targetPort: 9000
+    targetPort: c-p-mealie
   selector:
-    app: mealie  # <- this must match label from the pod!
-  type: LoadBalancer
+    app: mealie  
+  type: ClusterIP
