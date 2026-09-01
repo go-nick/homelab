@@ -23,6 +23,10 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: "America/Sao_Paulo"
+            ports:
+              - name: c-p-prowlarr
+                containerPort: 9696
+                protocol: TCP
 
     service:
       main:
@@ -30,6 +34,7 @@ spec:
         ports:
           s-p-prowlarr:
             port: 9696
+            targetPort: c-p-prowlarr
 
     persistence:
       config:
@@ -70,6 +75,10 @@ spec:
                     - /bin/sh
                     - -c
                     - "sed -i 's/^host_whitelist.*/host_whitelist = local.sabnzbd.nicklab.org,sabnzbd/' /config/sabnzbd.ini 2>/dev/null || true"
+            ports:
+              - name: c-p-sabnzbd
+                containerPort: 8080
+                protocol: TCP
 
     service:
       main:
@@ -77,6 +86,7 @@ spec:
         ports:
           s-p-sabnzbd:
             port: 8080
+            targetPort: c-p-sabnzbd
 
     persistence:
       config:
@@ -120,6 +130,10 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: "America/Sao_Paulo"
+            ports:
+              - name: c-p-radarr
+                containerPort: 7878
+                protocol: TCP
 
     service:
       main:
@@ -127,6 +141,7 @@ spec:
         ports:
           s-p-radarr:
             port: 7878
+            targetPort: c-p-radarr
 
     persistence:
       config:
@@ -170,6 +185,10 @@ spec:
               PUID: "1000"
               PGID: "1000"
               TZ: "America/Sao_Paulo"
+            ports:
+              - name: c-p-sonarr
+                containerPort: 8989
+                protocol: TCP
 
     service:
       main:
@@ -177,6 +196,7 @@ spec:
         ports:
           s-p-sonarr:
             port: 8989
+            targetPort: c-p-sonarr
 
     persistence:
       config:
