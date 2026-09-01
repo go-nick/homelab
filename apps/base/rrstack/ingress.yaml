@@ -53,7 +53,7 @@ spec:
               service:
                 name: radarr
                 port:
-                  number: 7878
+                  name: s-p-radarr
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

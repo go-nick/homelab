@@ -125,7 +125,7 @@ spec:
       main:
         controller: main
         ports:
-          http:
+          s-p-radarr:
             port: 7878
 
     persistence:
