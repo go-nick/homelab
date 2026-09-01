@@ -28,7 +28,7 @@ spec:
       main:
         controller: main
         ports:
-          http:
+          prowlarr-port:
             port: 9696
 
     persistence:
