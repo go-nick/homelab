@@ -175,7 +175,7 @@ spec:
       main:
         controller: main
         ports:
-          http:
+          s-p-sonarr:
             port: 8989
 
     persistence:

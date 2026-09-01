@@ -72,4 +72,4 @@ spec:
               service:
                 name: sonarr
                 port:
-                  number: 8989
+                  name: s-p-sonarr
