@@ -69,3 +69,15 @@ s-p-<app> # service port names
 c-p-<app> # container port names
 ```
 
+## Homarr — Internal vs External URL
+
+Homarr's status ping runs server-side, from Homarr's own pod — not the browser. `local.<app>.nicklab.org` hostnames only resolve on devices pointed at AdGuard (your LAN), not inside the cluster's own DNS, so pinging that hostname from Homarr's pod shows a false red status even when the app is healthy.
+
+Fix: set each app's **Internal URL** (used for the status ping) to the in-cluster Service address, keep **External URL** as the `local.*.nicklab.org` hostname (used when clicking the tile):
+
+```
+http://<service>.<namespace>.svc.cluster.local:<port>
+```
+
+e.g. `http://prowlarr.rrstack.svc.cluster.local:9696`
+
