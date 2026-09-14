@@ -4,7 +4,10 @@ metadata:
   name: linkding
 spec:
   ports:
-    - port: 9090
+    - name: s-p-linkding
+      port: 9090
+      protocol: TCP
+      targetPort: c-p-linkding
   selector:
     app: linkding
   type: ClusterIP

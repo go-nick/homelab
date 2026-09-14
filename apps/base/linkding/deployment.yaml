@@ -32,7 +32,9 @@ spec:
             - name: linkding-volume
               mountPath: /etc/linkding/data
           ports:
-            - containerPort: 9090
+            - name: c-p-linkding
+              containerPort: 9090
+              protocol: TCP
           envFrom:
             - secretRef:
                 name: linkding-container-env
