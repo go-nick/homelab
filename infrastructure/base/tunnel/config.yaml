@@ -18,10 +18,10 @@ data:
     ingress:
     - hostname: mealie.nicklab.org
       service: http://traefik.kube-system.svc.cluster.local:80
-      #- hostname: linkding.nicklab.org
-      #service: http://traefik.kube-system.svc.cluster.local:80
-      #- hostname: homarr.nicklab.org
-      #service: http://traefik.kube-system.svc.cluster.local:80
+    - hostname: linkding.nicklab.org
+      service: http://traefik.kube-system.svc.cluster.local:80
+    - hostname: homarr.nicklab.org
+      service: http://traefik.kube-system.svc.cluster.local:80
 
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
