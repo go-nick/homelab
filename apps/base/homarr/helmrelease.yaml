@@ -29,21 +29,22 @@ spec:
                 service:
                   name: homarr
                   port:
-                    number: 7575 # service port, can change but keep the same as the containerPort for sanity
+                    name: app
+                    # number: 7575 # service port, can change but keep the same as the containerPort for sanity
 
     # for visual inspection - not needed
     service:
       enabled: true 
       type: ClusterIP
       ports:
-        app:
+        app: # chart does not allow renaming this port
           port: 7575       # match container port for keeping sanity
           targetPort: http
           protocol: TCP 
 
     # same as the service
     containerPorts:
-      http:
+      http: # chart also does not allow renaming this port
         port: 7575      # default option, never change this, explicit only for debugging
         protocol: TCP
 
