@@ -49,6 +49,17 @@ spec:
       prometheusSpec:
         nodeSelector:
           kubernetes.io/hostname: beelink-master
+        scrapeInterval: "1m"
+        evaluationInterval: "1m"
+        retentionSize: "12GB"
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: local-path
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 15Gi
 
     alertmanager:
       alertmanagerSpec:
