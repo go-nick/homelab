@@ -34,6 +34,13 @@ spec:
           failureThreshold: 1
           initialDelaySeconds: 10
           periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "10m"
+          limits:
+            memory: "100Mi"
+            cpu: "25m"
         volumeMounts:
         - name: config
           mountPath: /etc/cloudflared/config
