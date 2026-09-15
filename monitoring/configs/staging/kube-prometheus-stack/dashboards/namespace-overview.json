@@ -5,8 +5,8 @@
     "name": "k8s_views_ns",
     "namespace": "default",
     "uid": "b30028bb-26b5-48ed-be4d-9b5eddacadcc",
-    "resourceVersion": "1789423740070000",
-    "generation": 1,
+    "resourceVersion": "1789484814029015",
+    "generation": 10,
     "creationTimestamp": "2026-09-14T22:09:00Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "944034679836672"
@@ -15,9 +15,11 @@
       "grafana.app/createdBy": "access-policy:service",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerId": "sidecarProvider",
-      "grafana.app/sourceChecksum": "10932c0c1a80a397ec34a7d7fec64196",
+      "grafana.app/sourceChecksum": "91ccbf557f2183171f1cfb06ee574108",
       "grafana.app/sourcePath": "/tmp/dashboards/namespace-overview.json",
-      "grafana.app/sourceTimestamp": "1789423732000",
+      "grafana.app/sourceTimestamp": "1789484813000",
+      "grafana.app/updatedBy": "access-policy:service",
+      "grafana.app/updatedTimestamp": "2026-09-15T15:06:54Z",
       "grafana.app/folder": ""
     }
   },
@@ -71,7 +73,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sum(kube_pod_container_info{namespace=~\"$namespace\", pod=~\"${created_by}.*\", }) by (pod)",
+                        "expr": "sum(kube_pod_container_info{namespace=~\"$namespace\"}) by (pod)",
                         "interval": "",
                         "legendFormat": "{{ pod }}",
                         "range": true
@@ -90,48 +92,16 @@
           "id": 2,
           "links": [],
           "title": "Nb of containers by pod",
+          "transparent": true,
           "vizConfig": {
-            "group": "timeseries",
+            "group": "stat",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 25,
-                    "gradientMode": "opacity",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": false,
-                    "lineInterpolation": "smooth",
-                    "lineWidth": 2,
-                    "pointSize": 5,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "never",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
+                    "fixedColor": "#ad46ff",
+                    "mode": "continuous-viridis"
                   },
                   "decimals": 0,
                   "thresholds": {
@@ -152,17 +122,24 @@
                 "overrides": []
               },
               "options": {
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "hidden",
-                  "placement": "right",
-                  "showLegend": false
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
                 },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "multi",
-                  "sort": "none"
-                }
+                "showPercentChange": false,
+                "text": {
+                  "titleSize": 12
+                },
+                "textMode": "auto",
+                "wideLayout": true
               }
             },
             "version": "13.2.0"
@@ -324,6 +301,7 @@
           "id": 29,
           "links": [],
           "title": "CPU usage by Pod",
+          "transparent": true,
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -331,10 +309,11 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "palette-classic-by-name",
+                    "seriesBy": "min"
                   },
                   "custom": {
-                    "axisBorderShow": false,
+                    "axisBorderShow": true,
                     "axisCenteredZero": false,
                     "axisColorMode": "text",
                     "axisLabel": "CPU CORES",
@@ -388,7 +367,9 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "table",
-                  "placement": "right",
+                  "enableFacetedFilter": true,
+                  "overflow": "ellipsis",
+                  "placement": "bottom",
                   "showLegend": true
                 },
                 "tooltip": {
@@ -433,7 +414,9 @@
                   }
                 }
               ],
-              "queryOptions": {},
+              "queryOptions": {
+                "interval": "1h"
+              },
               "transformations": []
             }
           },
@@ -441,6 +424,7 @@
           "id": 30,
           "links": [],
           "title": "Memory usage by Pod",
+          "transparent": true,
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -448,12 +432,13 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "palette-classic-by-name"
                   },
                   "custom": {
-                    "axisBorderShow": false,
+                    "axisBorderShow": true,
                     "axisCenteredZero": false,
                     "axisColorMode": "text",
+                    "axisGridShow": true,
                     "axisLabel": "",
                     "axisPlacement": "auto",
                     "barAlignment": 0,
@@ -468,6 +453,9 @@
                     },
                     "insertNulls": false,
                     "lineInterpolation": "smooth",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
                     "lineWidth": 2,
                     "pointSize": 5,
                     "scaleDistribution": {
@@ -505,8 +493,12 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true
+                  "enableFacetedFilter": true,
+                  "overflow": "ellipsis",
+                  "placement": "bottom",
+                  "showLegend": true,
+                  "sortBy": "Name",
+                  "sortDesc": false
                 },
                 "tooltip": {
                   "hideZeros": false,
@@ -747,7 +739,9 @@
                   }
                 }
               ],
-              "queryOptions": {},
+              "queryOptions": {
+                "interval": "1m"
+              },
               "transformations": []
             }
           },
@@ -755,6 +749,7 @@
           "id": 32,
           "links": [],
           "title": "Kubernetes Resource Count",
+          "transparent": true,
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -762,7 +757,7 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "continuous-plasma"
                   },
                   "custom": {
                     "axisBorderShow": false,
@@ -823,7 +818,7 @@
                     "mean"
                   ],
                   "displayMode": "table",
-                  "placement": "right",
+                  "placement": "bottom",
                   "showLegend": true,
                   "sortBy": "Max",
                   "sortDesc": true
@@ -879,12 +874,17 @@
           "id": 46,
           "links": [],
           "title": "Namespace(s) usage on total cluster CPU in %",
+          "transparent": true,
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
                 "defaults": {
+                  "color": {
+                    "fixedColor": "blue",
+                    "mode": "shades"
+                  },
                   "decimals": 2,
                   "max": 1,
                   "min": 0,
@@ -896,12 +896,12 @@
                         "value": 0
                       },
                       {
-                        "color": "orange",
-                        "value": 50
+                        "color": "#EAB839",
+                        "value": 60
                       },
                       {
                         "color": "red",
-                        "value": 70
+                        "value": 80
                       }
                     ]
                   },
@@ -910,14 +910,14 @@
                 "overrides": []
               },
               "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
                 "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
                 },
-                "endpointMarker": "point",
+                "endpointMarker": "glow",
                 "minVizHeight": 75,
                 "minVizWidth": 75,
                 "orientation": "auto",
@@ -931,10 +931,10 @@
                 "segmentCount": 1,
                 "segmentSpacing": 0.3,
                 "shape": "gauge",
-                "showThresholdLabels": false,
+                "showThresholdLabels": true,
                 "showThresholdMarkers": false,
                 "sizing": "auto",
-                "sparkline": false,
+                "sparkline": true,
                 "text": {},
                 "textMode": "auto"
               }
@@ -982,12 +982,17 @@
           "id": 48,
           "links": [],
           "title": "Namespace(s) usage on total cluster RAM in %",
+          "transparent": true,
           "vizConfig": {
             "group": "gauge",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
                 "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "shades"
+                  },
                   "decimals": 2,
                   "max": 1,
                   "min": 0,
@@ -1013,14 +1018,14 @@
                 "overrides": []
               },
               "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
                 "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
                 },
-                "endpointMarker": "point",
+                "endpointMarker": "glow",
                 "minVizHeight": 75,
                 "minVizWidth": 75,
                 "orientation": "auto",
@@ -1034,10 +1039,10 @@
                 "segmentCount": 1,
                 "segmentSpacing": 0.3,
                 "shape": "gauge",
-                "showThresholdLabels": false,
+                "showThresholdLabels": true,
                 "showThresholdMarkers": false,
                 "sizing": "auto",
-                "sparkline": false,
+                "sparkline": true,
                 "text": {},
                 "textMode": "auto"
               }
@@ -1287,7 +1292,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sum(kube_pod_container_resource_requests{namespace=~\"$namespace\", resource=\"cpu\", })",
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=~\"$namespace\", resource=\"cpu\", pod!~\"helm-install-.*\"})",
                         "legendFormat": "Requests",
                         "range": true
                       },
@@ -1308,7 +1313,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sum(kube_pod_container_resource_limits{namespace=~\"$namespace\", resource=\"cpu\", })",
+                        "expr": "sum(kube_pod_container_resource_limits{namespace=~\"$namespace\", resource=\"cpu\", pod!~\"helm-install-.*\"})",
                         "legendFormat": "Limits",
                         "range": true
                       },
@@ -1330,6 +1335,7 @@
                       "spec": {
                         "editorMode": "code",
                         "expr": "sum(machine_cpu_cores{})",
+                        "format": "time_series",
                         "legendFormat": "Cluster Total",
                         "range": true
                       },
@@ -1353,6 +1359,10 @@
             "spec": {
               "fieldConfig": {
                 "defaults": {
+                  "color": {
+                    "fixedColor": "blue",
+                    "mode": "shades"
+                  },
                   "noValue": "0",
                   "thresholds": {
                     "mode": "absolute",
@@ -1368,10 +1378,10 @@
                 "overrides": []
               },
               "options": {
-                "colorMode": "none",
-                "graphMode": "none",
-                "justifyMode": "center",
-                "orientation": "auto",
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "horizontal",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                   "calcs": [
@@ -1381,7 +1391,6 @@
                   "values": false
                 },
                 "showPercentChange": false,
-                "text": {},
                 "textMode": "auto",
                 "wideLayout": true
               }
@@ -1432,7 +1441,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sum(kube_pod_container_resource_requests{namespace=~\"$namespace\", resource=\"memory\", })",
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=~\"$namespace\", resource=\"memory\", pod!~\"helm-install-.*\"})",
                         "legendFormat": "Requests",
                         "range": true
                       },
@@ -1453,7 +1462,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sum(kube_pod_container_resource_limits{namespace=~\"$namespace\", resource=\"memory\", })",
+                        "expr": "sum(kube_pod_container_resource_limits{namespace=~\"$namespace\", resource=\"memory\", pod!~\"helm-install-.*\"})",
                         "legendFormat": "Limits",
                         "range": true
                       },
@@ -1498,6 +1507,10 @@
             "spec": {
               "fieldConfig": {
                 "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "shades"
+                  },
                   "noValue": "0",
                   "thresholds": {
                     "mode": "absolute",
@@ -1513,10 +1526,10 @@
                 "overrides": []
               },
               "options": {
-                "colorMode": "none",
+                "colorMode": "value",
                 "graphMode": "none",
                 "justifyMode": "auto",
-                "orientation": "auto",
+                "orientation": "horizontal",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                   "calcs": [
@@ -1808,7 +1821,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": true,
-                        "expr": "sum(rate(container_cpu_cfs_throttled_seconds_total{namespace=~\"$namespace\"}[$__rate_interval])) by (pod) > 0",
+                        "expr": "sum(rate(container_pressure_cpu_waiting_seconds_total{namespace=~\"$namespace\"}[$__rate_interval])) by (pod) > 0",
                         "interval": "$resolution",
                         "legendFormat": "{{ pod }}",
                         "range": true
@@ -1823,10 +1836,11 @@
               "transformations": []
             }
           },
-          "description": "",
+          "description": "container_pressure_cpu_waiting_seconds_total",
           "id": 68,
           "links": [],
           "title": "CPU Throttled seconds by pod",
+          "transparent": true,
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -1899,7 +1913,7 @@
                     "mean"
                   ],
                   "displayMode": "table",
-                  "placement": "right",
+                  "placement": "bottom",
                   "showLegend": true,
                   "sortBy": "Max",
                   "sortDesc": true
@@ -2592,8 +2606,8 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "fixedColor": "red",
-                    "mode": "fixed"
+                    "fixedColor": "blue",
+                    "mode": "shades"
                   },
                   "decimals": 2,
                   "max": 1,
@@ -2621,7 +2635,7 @@
               },
               "options": {
                 "barShape": "rounded",
-                "barWidthFactor": 0.25,
+                "barWidthFactor": 0.1,
                 "effects": {
                   "barGlow": true,
                   "centerGlow": true,
@@ -2640,7 +2654,7 @@
                 },
                 "segmentCount": 1,
                 "segmentSpacing": 0.3,
-                "shape": "circle",
+                "shape": "gauge",
                 "showThresholdLabels": false,
                 "showThresholdMarkers": false,
                 "sizing": "auto",
@@ -2700,8 +2714,8 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "fixedColor": "red",
-                    "mode": "fixed"
+                    "fixedColor": "blue",
+                    "mode": "shades"
                   },
                   "decimals": 2,
                   "max": 1,
@@ -2729,7 +2743,7 @@
               },
               "options": {
                 "barShape": "rounded",
-                "barWidthFactor": 0.25,
+                "barWidthFactor": 0.1,
                 "effects": {
                   "barGlow": true,
                   "centerGlow": true,
@@ -2748,7 +2762,221 @@
                 },
                 "segmentCount": 1,
                 "segmentSpacing": 0.3,
-                "shape": "circle",
+                "shape": "gauge",
+                "showThresholdLabels": false,
+                "showThresholdMarkers": false,
+                "sizing": "auto",
+                "sparkline": true,
+                "text": {},
+                "textMode": "auto"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-78": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": true,
+                        "expr": "sum(container_memory_working_set_bytes{namespace=~\"$namespace\", node=\"old-white-worker\"}) by (namespace)\n/ ignoring(namespace) group_left\nsum(machine_memory_bytes{node=\"old-white-worker\"})",
+                        "interval": "",
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Namespace(s) usage on total cluster RAM in %",
+          "id": 78,
+          "links": [],
+          "title": "namespace-usage-old-white-worker-ram",
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "shades"
+                  },
+                  "decimals": 2,
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "percentage",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "orange",
+                        "value": 50
+                      },
+                      {
+                        "color": "red",
+                        "value": 70
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
+                "effects": {
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
+                },
+                "endpointMarker": "glow",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": false,
+                "showThresholdMarkers": false,
+                "sizing": "auto",
+                "sparkline": true,
+                "text": {},
+                "textMode": "auto"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-79": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": true,
+                        "expr": "sum(container_memory_working_set_bytes{namespace=~\"$namespace\", node=\"beelink-master\"}) by (namespace)\n/ ignoring(namespace) group_left\nsum(machine_memory_bytes{node=\"beelink-master\"})",
+                        "interval": "",
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "Namespace(s) usage on total cluster RAM in %",
+          "id": 79,
+          "links": [],
+          "title": "namespace-usage-beelink-master-ram",
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "shades"
+                  },
+                  "decimals": 2,
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "percentage",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "orange",
+                        "value": 50
+                      },
+                      {
+                        "color": "red",
+                        "value": 70
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
+                "effects": {
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
+                },
+                "endpointMarker": "glow",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
                 "showThresholdLabels": false,
                 "showThresholdMarkers": false,
                 "sizing": "auto",
@@ -2780,7 +3008,7 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "sum(kube_deployment_status_replicas_unavailable{namespace=~\"$namespace\", pod=~\"${created_by}.*\", }) by (deployment)",
+                        "expr": "sum(kube_deployment_status_replicas_unavailable{namespace=~\"$namespace\"}) by (deployment)",
                         "interval": "",
                         "legendFormat": "{{ deployment }}",
                         "range": true
@@ -2876,6 +3104,646 @@
             "version": "13.2.0"
           }
         }
+      },
+      "panel-80": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(container_memory_working_set_bytes{node=\"beelink-master\"})\n/\nsum(machine_memory_bytes{node=\"beelink-master\"})",
+                        "instant": true,
+                        "interval": "",
+                        "legendFormat": "",
+                        "range": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 80,
+          "links": [],
+          "title": "Beelink Master RAM",
+          "transparent": true,
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "shades"
+                  },
+                  "decimals": 2,
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "percentage",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "#EAB839",
+                        "value": 60
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
+                "effects": {
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
+                },
+                "endpointMarker": "glow",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": true,
+                "showThresholdMarkers": false,
+                "sizing": "auto",
+                "sparkline": true,
+                "text": {},
+                "textMode": "auto"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-81": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(rate(container_cpu_usage_seconds_total{node=\"beelink-master\"}[$__rate_interval]))\n/\nsum(machine_cpu_cores{node=\"beelink-master\"})",
+                        "instant": true,
+                        "interval": "",
+                        "legendFormat": "",
+                        "range": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 81,
+          "links": [],
+          "title": "Beelink Master Total CPU",
+          "transparent": true,
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "blue",
+                    "mode": "shades"
+                  },
+                  "decimals": 2,
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "percentage",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "#EAB839",
+                        "value": 60
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
+                "effects": {
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
+                },
+                "endpointMarker": "glow",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": true,
+                "showThresholdMarkers": false,
+                "sizing": "auto",
+                "sparkline": true,
+                "text": {},
+                "textMode": "auto"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-82": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(container_memory_working_set_bytes{node=\"old-white-worker\"})\n/\nsum(machine_memory_bytes{node=\"old-white-worker\"})",
+                        "instant": true,
+                        "interval": "",
+                        "legendFormat": "",
+                        "range": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 82,
+          "links": [],
+          "title": "Old White Worker RAM",
+          "transparent": true,
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "shades"
+                  },
+                  "decimals": 2,
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "percentage",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "#EAB839",
+                        "value": 60
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
+                "effects": {
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
+                },
+                "endpointMarker": "glow",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": true,
+                "showThresholdMarkers": false,
+                "sizing": "auto",
+                "sparkline": true,
+                "text": {},
+                "textMode": "auto"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-83": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(rate(container_cpu_usage_seconds_total{node=\"beelink-master\"}[$__rate_interval]))\n/\nsum(machine_cpu_cores{node=\"beelink-master\"})",
+                        "instant": true,
+                        "interval": "",
+                        "legendFormat": "",
+                        "range": false
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 83,
+          "links": [],
+          "title": "Beelink Master Total CPU",
+          "transparent": true,
+          "vizConfig": {
+            "group": "gauge",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "blue",
+                    "mode": "shades"
+                  },
+                  "decimals": 2,
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "percentage",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "#EAB839",
+                        "value": 60
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barShape": "rounded",
+                "barWidthFactor": 0.1,
+                "effects": {
+                  "barGlow": true,
+                  "centerGlow": true,
+                  "gradient": true
+                },
+                "endpointMarker": "glow",
+                "minVizHeight": 75,
+                "minVizWidth": 75,
+                "orientation": "auto",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "segmentCount": 1,
+                "segmentSpacing": 0.3,
+                "shape": "gauge",
+                "showThresholdLabels": true,
+                "showThresholdMarkers": false,
+                "sizing": "auto",
+                "sparkline": true,
+                "text": {},
+                "textMode": "auto"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-84": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${datasource}"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": true,
+                        "expr": "sum(rate(container_pressure_cpu_waiting_seconds_total{namespace=~\"$namespace\"}[$__rate_interval])) by (pod) > 0",
+                        "interval": "$resolution",
+                        "legendFormat": "{{ pod }}",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "container_pressure_cpu_waiting_seconds_total",
+          "id": 84,
+          "links": [],
+          "title": "CPU Throttled percentage by pod",
+          "transparent": true,
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "SECONDS",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 42,
+                    "gradientMode": "opacity",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "smooth",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "never",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "decimals": 2,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "calcs": [
+                    "min",
+                    "max",
+                    "mean"
+                  ],
+                  "displayMode": "table",
+                  "enableFacetedFilter": false,
+                  "overflow": "ellipsis",
+                  "placement": "bottom",
+                  "showLegend": true,
+                  "sortBy": "Max",
+                  "sortDesc": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "multi",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-85": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 85,
+          "links": [],
+          "title": "Throttling",
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "**SLI/SLO 101**\n- SLI = the measured number (e.g. \"% time waiting for CPU\")\n- SLO = your target threshold for that SLI (e.g. \"stay under 5%\")\n- SLA = an SLO with contractual consequences — not relevant for a homelab\n\nCPU pressure/throttling rule of thumb\nSustained pressure above ~5-10% is worth investigating. Below that = normal noise.\n\nReading a rate(x_seconds_total[...]) panel shown in ms\nRaw value is a 0-1 fraction; \"Seconds\" unit just auto-scales it to ms/µs/ns.\nShortcut: displayed ms ÷ 10 = % (e.g. 16.51ms → 1.65%, 5.25ms → 0.5%)",
+                "mode": "markdown"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
+      },
+      "panel-86": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 86,
+          "links": [],
+          "title": "Resources/Limits/QoS",
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "### Resources/Limits — best practice\n- Requests: always set (CPU + memory) — determines scheduling + QoS class. No real downside.\n- Memory limits: always set — memory is incompressible; contains a leak/spike to just that container instead of destabilizing the node.\n- CPU limits: debated in big clusters (CFS quota can throttle even with spare node capacity) — but on small hardware (4 cores/node), still worth setting, sized generously above observed peaks, since one runaway container can starve everything else here.\n\n### Where resources actually live\n- Container level only — containers[].resources\n- Pod: pod.spec.containers[].resources\n- Deployment/StatefulSet/etc: spec.template.spec.containers[].resources (same field, nested via the pod template)\n- Service: never — pure networking, no compute concept at all\n- Multi-container pod = each container gets its own independent resources block; pod total = sum of all containers\n\n### QoS Classes — determined automatically by what you set\n- Guaranteed: requests == limits (for every container, both CPU and memory) — highest priority, last to be evicted under node pressure.\n- Burstable: requests < limits (at least one resource set, not equal) — normal default choice, what most of your apps use.\n- BestEffort: no requests/limits set at all — first to be evicted under node pressure, first to get OOM-killed. What every app had before you started this resource-tuning pass.\n\nClass is never set directly — it's a pure side effect of the requests/limits values you declare per container.",
+                "mode": "markdown"
+              }
+            },
+            "version": "13.2.0"
+          }
+        }
       }
     },
     "layout": {
@@ -2886,6 +3754,8 @@
             "kind": "RowsLayoutRow",
             "spec": {
               "collapse": false,
+              "fillScreen": true,
+              "hideHeader": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -2897,7 +3767,7 @@
                           "kind": "ElementReference",
                           "name": "panel-46"
                         },
-                        "height": 7,
+                        "height": 5,
                         "width": 6,
                         "x": 0,
                         "y": 0
@@ -2908,10 +3778,10 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-48"
+                          "name": "panel-81"
                         },
-                        "height": 7,
-                        "width": 6,
+                        "height": 5,
+                        "width": 5,
                         "x": 6,
                         "y": 0
                       }
@@ -2921,25 +3791,12 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-32"
+                          "name": "panel-77"
                         },
-                        "height": 11,
-                        "width": 12,
-                        "x": 12,
+                        "height": 5,
+                        "width": 13,
+                        "x": 11,
                         "y": 0
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-76"
-                        },
-                        "height": 7,
-                        "width": 12,
-                        "x": 0,
-                        "y": 7
                       }
                     },
                     {
@@ -2949,10 +3806,75 @@
                           "kind": "ElementReference",
                           "name": "panel-62"
                         },
-                        "height": 7,
+                        "height": 5,
                         "width": 6,
-                        "x": 12,
-                        "y": 11
+                        "x": 0,
+                        "y": 5
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-83"
+                        },
+                        "height": 5,
+                        "width": 5,
+                        "x": 6,
+                        "y": 5
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-76"
+                        },
+                        "height": 5,
+                        "width": 13,
+                        "x": 11,
+                        "y": 5
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-48"
+                        },
+                        "height": 5,
+                        "width": 6,
+                        "x": 0,
+                        "y": 10
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-80"
+                        },
+                        "height": 5,
+                        "width": 5,
+                        "x": 6,
+                        "y": 10
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-78"
+                        },
+                        "height": 5,
+                        "width": 13,
+                        "x": 11,
+                        "y": 10
                       }
                     },
                     {
@@ -2962,10 +3884,10 @@
                           "kind": "ElementReference",
                           "name": "panel-64"
                         },
-                        "height": 7,
+                        "height": 5,
                         "width": 6,
-                        "x": 18,
-                        "y": 11
+                        "x": 0,
+                        "y": 15
                       }
                     },
                     {
@@ -2973,18 +3895,98 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-77"
+                          "name": "panel-82"
                         },
-                        "height": 7,
-                        "width": 12,
-                        "x": 0,
-                        "y": 14
+                        "height": 5,
+                        "width": 5,
+                        "x": 6,
+                        "y": 15
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-79"
+                        },
+                        "height": 5,
+                        "width": 13,
+                        "x": 11,
+                        "y": 15
                       }
                     }
                   ]
                 }
               },
               "title": "Overview"
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "collapse": false,
+              "fillScreen": true,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-70"
+                        },
+                        "height": 10,
+                        "width": 11,
+                        "x": 0,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-29"
+                        },
+                        "height": 14,
+                        "width": 13,
+                        "x": 11,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-86"
+                        },
+                        "height": 18,
+                        "width": 11,
+                        "x": 0,
+                        "y": 10
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-30"
+                        },
+                        "height": 14,
+                        "width": 13,
+                        "x": 11,
+                        "y": 14
+                      }
+                    }
+                  ]
+                }
+              },
+              "title": "Historical"
             }
           },
           {
@@ -3000,10 +4002,10 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-29"
+                          "name": "panel-84"
                         },
-                        "height": 8,
-                        "width": 12,
+                        "height": 12,
+                        "width": 14,
                         "x": 0,
                         "y": 0
                       }
@@ -3013,12 +4015,25 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-30"
+                          "name": "panel-85"
                         },
-                        "height": 8,
-                        "width": 12,
-                        "x": 12,
+                        "height": 10,
+                        "width": 10,
+                        "x": 14,
                         "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-32"
+                        },
+                        "height": 15,
+                        "width": 10,
+                        "x": 14,
+                        "y": 10
                       }
                     },
                     {
@@ -3028,10 +4043,10 @@
                           "kind": "ElementReference",
                           "name": "panel-68"
                         },
-                        "height": 8,
-                        "width": 12,
+                        "height": 12,
+                        "width": 14,
                         "x": 0,
-                        "y": 8
+                        "y": 12
                       }
                     }
                   ]
@@ -3053,7 +4068,7 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-70"
+                          "name": "panel-74"
                         },
                         "height": 9,
                         "width": 12,
@@ -3079,19 +4094,6 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-74"
-                        },
-                        "height": 9,
-                        "width": 12,
-                        "x": 0,
-                        "y": 9
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
                           "name": "panel-75"
                         },
                         "height": 9,
@@ -3105,10 +4107,10 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-5"
+                          "name": "panel-2"
                         },
-                        "height": 8,
-                        "width": 12,
+                        "height": 22,
+                        "width": 24,
                         "x": 0,
                         "y": 18
                       }
@@ -3118,12 +4120,12 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-2"
+                          "name": "panel-5"
                         },
-                        "height": 8,
-                        "width": 12,
-                        "x": 12,
-                        "y": 18
+                        "height": 6,
+                        "width": 24,
+                        "x": 0,
+                        "y": 40
                       }
                     },
                     {
@@ -3136,7 +4138,7 @@
                         "height": 8,
                         "width": 12,
                         "x": 0,
-                        "y": 26
+                        "y": 46
                       }
                     },
                     {
@@ -3149,7 +4151,7 @@
                         "height": 8,
                         "width": 12,
                         "x": 12,
-                        "y": 26
+                        "y": 46
                       }
                     }
                   ]
@@ -3161,7 +4163,7 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "collapse": false,
+              "collapse": true,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -3222,7 +4224,7 @@
       "Prometheus"
     ],
     "timeSettings": {
-      "autoRefresh": "30s",
+      "autoRefresh": "1m",
       "autoRefreshIntervals": [
         "5s",
         "10s",
@@ -3236,7 +4238,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-5m",
+      "from": "now-6h",
       "hideTimepicker": false,
       "timezone": "browser",
       "to": "now"
@@ -3267,9 +4269,7 @@
         "spec": {
           "allowCustomValue": true,
           "current": {
-            "text": [
-              "All"
-            ],
+            "text": "All",
             "value": [
               "$__all"
             ]
@@ -3305,45 +4305,14 @@
         "spec": {
           "allowCustomValue": true,
           "current": {
-            "text": "30s",
-            "value": "30s"
+            "text": "1m",
+            "value": "1m"
           },
           "hide": "dontHide",
           "includeAll": false,
           "multi": false,
           "name": "resolution",
-          "options": [
-            {
-              "selected": false,
-              "text": "1s",
-              "value": "1s"
-            },
-            {
-              "selected": false,
-              "text": "15s",
-              "value": "15s"
-            },
-            {
-              "selected": true,
-              "text": "30s",
-              "value": "30s"
-            },
-            {
-              "selected": false,
-              "text": "1m",
-              "value": "1m"
-            },
-            {
-              "selected": false,
-              "text": "3m",
-              "value": "3m"
-            },
-            {
-              "selected": false,
-              "text": "5m",
-              "value": "5m"
-            }
-          ],
+          "options": [],
           "query": "1s, 15s, 30s, 1m, 3m, 5m",
           "skipUrlSync": false,
           "valuesFormat": "csv"
