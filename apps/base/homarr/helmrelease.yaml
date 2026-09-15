@@ -10,6 +10,15 @@ spec:
   values:
     nodeSelector:
       kubernetes.io/hostname: beelink-master
+
+    resources:
+      limits:
+        cpu: "75m"
+        memory: "1200Mi"
+      requests:
+        cpu: "20m"
+        memory: "1000Mi"
+
     persistence:
       homarrDatabase:
         enabled: true
