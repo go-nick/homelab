@@ -11,13 +11,20 @@ spec:
     nodeSelector:
       kubernetes.io/hostname: beelink-master
 
+    livenessProbe:
+      initialDelaySeconds: 60
+      failureThreshold: 5
+    readinessProbe:
+      initialDelaySeconds: 60
+      failureThreshold: 5
+
     resources:
       limits:
-        cpu: "75m"
-        memory: "1200Mi"
+        cpu: "500m"
+        memory: "600Mi"
       requests:
-        cpu: "20m"
-        memory: "1000Mi"
+        cpu: "50m"
+        memory: "100Mi"
 
     persistence:
       homarrDatabase:
