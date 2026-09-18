@@ -5,8 +5,8 @@
     "name": "k8s_views_ns",
     "namespace": "default",
     "uid": "b30028bb-26b5-48ed-be4d-9b5eddacadcc",
-    "resourceVersion": "1789484814029015",
-    "generation": 10,
+    "resourceVersion": "1789485064941997",
+    "generation": 11,
     "creationTimestamp": "2026-09-14T22:09:00Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "944034679836672"
@@ -15,11 +15,11 @@
       "grafana.app/createdBy": "access-policy:service",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerId": "sidecarProvider",
-      "grafana.app/sourceChecksum": "91ccbf557f2183171f1cfb06ee574108",
+      "grafana.app/sourceChecksum": "372e6eb9972c3e02b7bdb3d6ffe93143",
       "grafana.app/sourcePath": "/tmp/dashboards/namespace-overview.json",
-      "grafana.app/sourceTimestamp": "1789484813000",
+      "grafana.app/sourceTimestamp": "1789485064000",
       "grafana.app/updatedBy": "access-policy:service",
-      "grafana.app/updatedTimestamp": "2026-09-15T15:06:54Z",
+      "grafana.app/updatedTimestamp": "2026-09-15T15:11:04Z",
       "grafana.app/folder": ""
     }
   },
@@ -282,7 +282,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": true,
-                        "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\"}[$__rate_interval])) by (pod)",
+                        "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\"}[$__rate_interval])) by (pod) * 1000",
                         "interval": "$resolution",
                         "legendFormat": "{{ pod }}",
                         "range": true
@@ -297,10 +297,10 @@
               "transformations": []
             }
           },
-          "description": "",
+          "description": "Unit is in \"m\" as Kubernetes Yaml files expect",
           "id": 29,
           "links": [],
-          "title": "CPU usage by Pod",
+          "title": "CPU usage by Pod (m)",
           "transparent": true,
           "vizConfig": {
             "group": "timeseries",
@@ -316,7 +316,7 @@
                     "axisBorderShow": true,
                     "axisCenteredZero": false,
                     "axisColorMode": "text",
-                    "axisLabel": "CPU CORES",
+                    "axisLabel": "CPU CORES \"m\"",
                     "axisPlacement": "auto",
                     "barAlignment": 0,
                     "barWidthFactor": 0.6,
@@ -4238,7 +4238,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-6h",
+      "from": "now-24h",
       "hideTimepicker": false,
       "timezone": "browser",
       "to": "now"
@@ -4269,7 +4269,9 @@
         "spec": {
           "allowCustomValue": true,
           "current": {
-            "text": "All",
+            "text": [
+              "All"
+            ],
             "value": [
               "$__all"
             ]
