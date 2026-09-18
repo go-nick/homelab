@@ -20,11 +20,11 @@ spec:
 
     resources:
       requests:
-        cpu: "10m"
-        memory: "400Mi"
-      limits:
         cpu: "1000m"
-        memory: "1000Mi"
+        memory: "750Mi"
+      limits:
+        cpu: "1500m"
+        memory: "1500Mi"
 
     pms:
       configExistingClaim: "plex-config-pvc"
