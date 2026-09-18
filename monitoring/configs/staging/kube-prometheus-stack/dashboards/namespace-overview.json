@@ -5,8 +5,8 @@
     "name": "k8s_views_ns",
     "namespace": "default",
     "uid": "b30028bb-26b5-48ed-be4d-9b5eddacadcc",
-    "resourceVersion": "1789485064941997",
-    "generation": 11,
+    "resourceVersion": "1789752963686004",
+    "generation": 12,
     "creationTimestamp": "2026-09-14T22:09:00Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "944034679836672"
@@ -15,11 +15,11 @@
       "grafana.app/createdBy": "access-policy:service",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerId": "sidecarProvider",
-      "grafana.app/sourceChecksum": "372e6eb9972c3e02b7bdb3d6ffe93143",
+      "grafana.app/sourceChecksum": "74d2ef10deebe23424a8df06770dc71c",
       "grafana.app/sourcePath": "/tmp/dashboards/namespace-overview.json",
-      "grafana.app/sourceTimestamp": "1789485064000",
+      "grafana.app/sourceTimestamp": "1789752963000",
       "grafana.app/updatedBy": "access-policy:service",
-      "grafana.app/updatedTimestamp": "2026-09-15T15:11:04Z",
+      "grafana.app/updatedTimestamp": "2026-09-18T17:36:03Z",
       "grafana.app/folder": ""
     }
   },
@@ -487,7 +487,32 @@
                   },
                   "unit": "bytes"
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "__systemRef": "hideSeriesFrom",
+                    "matcher": {
+                      "id": "byNames",
+                      "options": {
+                        "mode": "exclude",
+                        "names": [
+                          "prowlarr-58d7458dcd-mccpq"
+                        ],
+                        "prefix": "All except:",
+                        "readOnly": true
+                      }
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.hideFrom",
+                        "value": {
+                          "legend": false,
+                          "tooltip": true,
+                          "viz": true
+                        }
+                      }
+                    ]
+                  }
+                ]
               },
               "options": {
                 "legend": {
@@ -3869,7 +3894,7 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-78"
+                          "name": "panel-79"
                         },
                         "height": 5,
                         "width": 13,
@@ -3908,7 +3933,7 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-79"
+                          "name": "panel-78"
                         },
                         "height": 5,
                         "width": 13,
