@@ -18,6 +18,13 @@ spec:
       containers:
       - image: ghcr.io/mealie-recipes/mealie:v3.20.1
         name: mealie
+        resources:
+          requests:
+            memory: "600Mi"
+            cpu: "5m"
+          limits:
+            memory: "1000Mi"
+            cpu: "30m"
         ports:
           - name: c-p-mealie
             containerPort: 9000 
