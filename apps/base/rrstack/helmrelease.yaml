@@ -153,10 +153,10 @@ spec:
 
             resources:
               requests:
-                cpu: "5m"
+                cpu: "10m"
                 memory: "350Mi"
               limits:
-                cpu: "100m"
+                cpu: "250m"
                 memory: "728Mi"
 
     service:
