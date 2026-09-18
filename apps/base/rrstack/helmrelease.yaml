@@ -29,10 +29,10 @@ spec:
                 protocol: TCP
             resources:
               requests:
-                cpu: "2m"
+                cpu: "5m"
                 memory: "250Mi"
               limits:
-                cpu: "10m"
+                cpu: "50m"
                 memory: "400Mi"
 
     service:
