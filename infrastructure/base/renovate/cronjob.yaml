@@ -14,7 +14,7 @@ spec:
             kubernetes.io/hostname: beelink-master
           containers:
             - name: renovate
-              image: renovate/renovate:latest
+              image: renovate/renovate:44.106.0
               args:
                 - go-nick/homelab
 
