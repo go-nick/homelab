@@ -5,8 +5,8 @@
     "name": "k8s_views_ns",
     "namespace": "default",
     "uid": "b30028bb-26b5-48ed-be4d-9b5eddacadcc",
-    "resourceVersion": "1789752963686004",
-    "generation": 12,
+    "resourceVersion": "1789758166393008",
+    "generation": 13,
     "creationTimestamp": "2026-09-14T22:09:00Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "944034679836672"
@@ -15,11 +15,11 @@
       "grafana.app/createdBy": "access-policy:service",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerId": "sidecarProvider",
-      "grafana.app/sourceChecksum": "74d2ef10deebe23424a8df06770dc71c",
+      "grafana.app/sourceChecksum": "1be56fc835ed284b3542577853c4fff8",
       "grafana.app/sourcePath": "/tmp/dashboards/namespace-overview.json",
-      "grafana.app/sourceTimestamp": "1789752963000",
+      "grafana.app/sourceTimestamp": "1789758166000",
       "grafana.app/updatedBy": "access-policy:service",
-      "grafana.app/updatedTimestamp": "2026-09-18T17:36:03Z",
+      "grafana.app/updatedTimestamp": "2026-09-18T19:02:46Z",
       "grafana.app/folder": ""
     }
   },
@@ -487,32 +487,7 @@
                   },
                   "unit": "bytes"
                 },
-                "overrides": [
-                  {
-                    "__systemRef": "hideSeriesFrom",
-                    "matcher": {
-                      "id": "byNames",
-                      "options": {
-                        "mode": "exclude",
-                        "names": [
-                          "prowlarr-58d7458dcd-mccpq"
-                        ],
-                        "prefix": "All except:",
-                        "readOnly": true
-                      }
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.hideFrom",
-                        "value": {
-                          "legend": false,
-                          "tooltip": true,
-                          "viz": true
-                        }
-                      }
-                    ]
-                  }
-                ]
+                "overrides": []
               },
               "options": {
                 "legend": {
@@ -3974,9 +3949,9 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-29"
+                          "name": "panel-32"
                         },
-                        "height": 14,
+                        "height": 10,
                         "width": 13,
                         "x": 11,
                         "y": 0
@@ -3989,8 +3964,8 @@
                           "kind": "ElementReference",
                           "name": "panel-86"
                         },
-                        "height": 18,
-                        "width": 11,
+                        "height": 28,
+                        "width": 9,
                         "x": 0,
                         "y": 10
                       }
@@ -4003,21 +3978,35 @@
                           "name": "panel-30"
                         },
                         "height": 14,
-                        "width": 13,
-                        "x": 11,
-                        "y": 14
+                        "width": 15,
+                        "x": 9,
+                        "y": 10
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-29"
+                        },
+                        "height": 14,
+                        "width": 15,
+                        "x": 9,
+                        "y": 24
                       }
                     }
                   ]
                 }
               },
-              "title": "Historical"
+              "title": "Resources"
             }
           },
           {
             "kind": "RowsLayoutRow",
             "spec": {
               "collapse": false,
+              "fillScreen": true,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -4027,38 +4016,12 @@
                       "spec": {
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-84"
-                        },
-                        "height": 12,
-                        "width": 14,
-                        "x": 0,
-                        "y": 0
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
                           "name": "panel-85"
                         },
-                        "height": 10,
-                        "width": 10,
-                        "x": 14,
+                        "height": 24,
+                        "width": 9,
+                        "x": 0,
                         "y": 0
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-32"
-                        },
-                        "height": 15,
-                        "width": 10,
-                        "x": 14,
-                        "y": 10
                       }
                     },
                     {
@@ -4069,15 +4032,28 @@
                           "name": "panel-68"
                         },
                         "height": 12,
-                        "width": 14,
-                        "x": 0,
+                        "width": 15,
+                        "x": 9,
+                        "y": 0
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-84"
+                        },
+                        "height": 12,
+                        "width": 15,
+                        "x": 9,
                         "y": 12
                       }
                     }
                   ]
                 }
               },
-              "title": "Resources"
+              "title": "Throttling"
             }
           },
           {
