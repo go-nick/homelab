@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: "88.*" # latest patch/minor auto updates
+      version: "91.*" # latest patch/minor auto updates
 
       sourceRef:
         kind: HelmRepository
