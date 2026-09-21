@@ -10,6 +10,8 @@ spec:
     spec:
       template:
         spec:
+          nodeSelector:
+            kubernetes.io/hostname: beelink-master
           containers:
             - name: renovate
               image: renovate/renovate:latest
@@ -21,5 +23,13 @@ spec:
                     name: renovate-container-env
                 - configMapRef:
                     name: renovate-configmap
+
+              resources:
+                requests:
+                  cpu: "500m"
+                  memory: "1.5Gi"
+                limits:
+                  cpu: "500m"
+                  memory: "1.5Gi"
 
           restartPolicy: Never
