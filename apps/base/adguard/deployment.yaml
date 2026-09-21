@@ -17,7 +17,7 @@ spec:
         kubernetes.io/hostname: beelink-master
       containers:
       - name: adguard-home
-        image: adguard/adguardhome:v0.107.78
+        image: adguard/adguardhome:v0.107.79
         ports:
         - containerPort: 53 #dns
           name: dns
