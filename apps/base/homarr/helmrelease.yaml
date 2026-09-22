@@ -64,6 +64,10 @@ spec:
         port: 7575      # default option, never change this, explicit only for debugging
         protocol: TCP
 
+    env:
+      AUTH_URL: "https://homarr.nicklab.org"
+      AUTH_TRUST_HOST: "true"
+
     envSecrets:
       dbEncryption:
         existingSecret: "db-encryption"
