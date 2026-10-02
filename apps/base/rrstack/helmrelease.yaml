@@ -219,8 +219,8 @@ spec:
                 cpu: "10m"
                 memory: "350Mi"
               limits:
-                cpu: "100m"
-                memory: "512Mi"
+                cpu: "500m"
+                memory: "750Mi"
 
     service:
       main:
