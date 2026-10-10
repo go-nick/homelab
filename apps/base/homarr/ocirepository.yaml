@@ -8,7 +8,7 @@ spec:
   interval: 1h
   url: oci://ghcr.io/homarr-labs/charts/homarr 
   ref:
-    tag: 8.26.0
+    tag: 8.29.2
   layerSelector:
     mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
     operation: extract    
