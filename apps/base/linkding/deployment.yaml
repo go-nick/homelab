@@ -35,6 +35,32 @@ spec:
             - name: c-p-linkding
               containerPort: 9090
               protocol: TCP
+          env:
+            # supervisord can't drop privileges as non-root; huey runs in linkding-tasks sidecar
+            - name: LD_DISABLE_BACKGROUND_TASKS
+              value: "True"
+          envFrom:
+            - secretRef:
+                name: linkding-container-env
+        - name: linkding-tasks
+          image: sissbruecker/linkding:1.47.0
+          command: ["python", "manage.py", "run_huey", "-f"]
+          workingDir: /etc/linkding
+          resources:
+            requests:
+              cpu: 20m
+              memory: 96Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: linkding-volume
+              mountPath: /etc/linkding/data
+          env:
+            - name: HOME
+              value: /tmp/home
           envFrom:
             - secretRef:
                 name: linkding-container-env
