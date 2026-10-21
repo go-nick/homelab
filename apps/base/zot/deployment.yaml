@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zot
+  template:
+    metadata:
+      labels:
+        app: zot
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: old-white-worker
+      containers:
+        - name: zot
+          image: ghcr.io/project-zot/zot:v2.1.2
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: zot-config
+              mountPath: /etc/zot
+            - name: zot-volume
+              mountPath: /var/lib/registry
+          ports:
+            - name: c-p-zot
+              containerPort: 5000
+              protocol: TCP
+      volumes:
+        - name: zot-config
+          configMap:
+            name: zot-config
+        - name: zot-volume
+          persistentVolumeClaim:
+            claimName: zot-pvc
