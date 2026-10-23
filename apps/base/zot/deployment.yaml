@@ -16,7 +16,7 @@ spec:
         kubernetes.io/hostname: old-white-worker
       containers:
         - name: zot
-          image: ghcr.io/project-zot/zot:v2.1.2
+          image: ghcr.io/project-zot/zot:v2.1.22
           resources:
             requests:
               cpu: 50m
