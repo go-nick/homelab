@@ -10,12 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install kustomize
+        env:
+          KUSTOMIZE_VERSION: "5.8.3"
+          KUSTOMIZE_SHA256: "cb9e31198d3f63b44848bd0afc4c8efc56e6cfef9c93a4a39a211940e6decd61"
         run: |
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          set -euo pipefail
+          curl -sLO "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          echo "${KUSTOMIZE_SHA256}  kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz" | sha256sum -c -
+          tar xzf "kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
           sudo mv kustomize /usr/local/bin/
+          rm "kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
 
       - name: Build every kustomization
         run: |
