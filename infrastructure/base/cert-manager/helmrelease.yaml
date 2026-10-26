@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: cert-manager
+  values:
+    crds:
+      enabled: true
+
+    nodeSelector:
+      kubernetes.io/hostname: beelink-master
+
+    webhook:
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+
+    cainjector:
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
+
+    startupapicheck:
+      nodeSelector:
+        kubernetes.io/hostname: beelink-master
