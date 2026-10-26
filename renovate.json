@@ -9,5 +9,25 @@
     "fileMatch": [
       "\\.yaml$"
     ]
-  }
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchPackageNames": [
+        "ghcr.io/fluxcd/source-controller",
+        "ghcr.io/fluxcd/kustomize-controller",
+        "ghcr.io/fluxcd/helm-controller",
+        "ghcr.io/fluxcd/notification-controller"
+      ],
+      "groupName": "flux controllers"
+    }
+  ]
 }

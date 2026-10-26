@@ -1,0 +1,57 @@
+name: validate
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  kustomize-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install kustomize
+        env:
+          KUSTOMIZE_VERSION: "5.8.3"
+          KUSTOMIZE_SHA256: "cb9e31198d3f63b44848bd0afc4c8efc56e6cfef9c93a4a39a211940e6decd61"
+        run: |
+          set -euo pipefail
+          curl -sLO "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          echo "${KUSTOMIZE_SHA256}  kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz" | sha256sum -c -
+          tar xzf "kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+          sudo mv kustomize /usr/local/bin/
+          rm "kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz"
+
+      - name: Install kubeconform
+        env:
+          KUBECONFORM_VERSION: "0.8.0"
+          KUBECONFORM_SHA256: "9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883"
+        run: |
+          set -euo pipefail
+          curl -sLO "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz"
+          echo "${KUBECONFORM_SHA256}  kubeconform-linux-amd64.tar.gz" | sha256sum -c -
+          tar xzf kubeconform-linux-amd64.tar.gz kubeconform
+          sudo mv kubeconform /usr/local/bin/
+          rm kubeconform-linux-amd64.tar.gz
+
+      - name: Build and validate every kustomization
+        run: |
+          set -euo pipefail
+          fail=0
+          while IFS= read -r -d '' f; do
+            dir=$(dirname "$f")
+            echo "::group::$dir"
+            if ! kustomize build "$dir" | kubeconform \
+              -summary \
+              -ignore-missing-schemas \
+              -kubernetes-version 1.35.0 \
+              -schema-location default \
+              -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'; then
+              echo "FAILED: $dir"
+              fail=1
+            fi
+            echo "::endgroup::"
+          done < <(find . -name "kustomization.yaml" -print0)
+          exit $fail
