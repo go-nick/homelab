@@ -1,0 +1,33 @@
+name: validate
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  kustomize-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Build every kustomization
+        run: |
+          set -euo pipefail
+          fail=0
+          while IFS= read -r -d '' f; do
+            dir=$(dirname "$f")
+            echo "::group::kustomize build $dir"
+            if ! kustomize build "$dir" > /dev/null; then
+              echo "FAILED: $dir"
+              fail=1
+            fi
+            echo "::endgroup::"
+          done < <(find . -name "kustomization.yaml" -print0)
+          exit $fail
