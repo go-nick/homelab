@@ -5,6 +5,10 @@ metadata:
   namespace: linkding
 spec:
   ingressClassName: traefik
+  tls:
+    - secretName: nicklab-org-tls
+      hosts:
+        - linkding.nicklab.org
   rules:
     - host: linkding.nicklab.org
       http:
