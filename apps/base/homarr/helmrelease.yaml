@@ -34,8 +34,12 @@ spec:
         storageClassName: "" # needed
 
     ingress:
-      enabled: true 
+      enabled: true
       ingressClassName: "traefik"
+      tls:
+        - secretName: nicklab-org-tls
+          hosts:
+            - homarr.nicklab.org
       hosts:
         - host: homarr.nicklab.org
           paths:

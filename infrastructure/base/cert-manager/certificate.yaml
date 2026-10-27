@@ -5,9 +5,15 @@ metadata:
   namespace: cert-manager
 spec:
   secretName: nicklab-org-tls
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "homarr,linkding,rrstack,zot,adguard"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
   dnsNames:
     - "*.nicklab.org"
     - "nicklab.org"
+    - "*.local.nicklab.org"

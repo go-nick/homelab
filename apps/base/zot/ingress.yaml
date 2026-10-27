@@ -5,6 +5,10 @@ metadata:
   namespace: zot
 spec:
   ingressClassName: traefik
+  tls:
+    - secretName: nicklab-org-tls
+      hosts:
+        - zot.nicklab.org
   rules:
     - host: zot.nicklab.org
       http:

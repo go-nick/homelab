@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: reflector
+  namespace: reflector
+spec:
+  interval: 1h
+  url: oci://ghcr.io/emberstack/helm-charts/reflector
+  ref:
+    tag: 10.0.69
+  layerSelector:
+    mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+    operation: extract
