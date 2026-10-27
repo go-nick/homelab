@@ -6,3 +6,5 @@ resources:
   - helmrelease.yaml
   - cloudflare-api-token-secret.yaml
   - clusterissuer-staging.yaml
+  - clusterissuer-production.yaml
+  - certificate.yaml
