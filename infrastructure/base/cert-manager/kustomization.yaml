@@ -4,3 +4,5 @@ resources:
   - namespace.yaml
   - ocirepository.yaml
   - helmrelease.yaml
+  - cloudflare-api-token-secret.yaml
+  - clusterissuer-staging.yaml
