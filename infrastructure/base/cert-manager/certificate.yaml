@@ -5,6 +5,9 @@ metadata:
   namespace: cert-manager
 spec:
   secretName: nicklab-org-tls
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
