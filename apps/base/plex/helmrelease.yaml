@@ -29,7 +29,7 @@ spec:
     pms:
       configExistingClaim: "plex-config-pvc"
       # configStorage: 10Gi
-      # storageClassName left unset — uses your cluster default (local-path), same as mealie/linkding
+      # storageClassName left unset — uses your cluster default (local-path), same as linkding
       # configExistingClaim left unset — no old config to reuse, this is genuinely fresh
 
     extraVolumes:

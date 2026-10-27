@@ -23,7 +23,6 @@ Flux watches this repo and reconciles cluster state automatically.
 - AdGuard Home — network-wide DNS ad-blocking
 - Homarr — unified dashboard for the homelab
 - Linkding — self-hosted bookmark manager
-- Mealie — recipe manager
 - Plex — media server
 - rrstack — media library automation
 
@@ -48,7 +47,6 @@ homelab/
 │   │   ├── adguard/
 │   │   ├── homarr/
 │   │   ├── linkding/
-│   │   ├── mealie/
 │   │   ├── plex/
 │   │   └── rrstack/
 │   └── staging/                # staging overlay, promotes to cluster
