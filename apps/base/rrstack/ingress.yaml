@@ -5,6 +5,10 @@ metadata:
   namespace: rrstack
 spec:
   ingressClassName: traefik
+  tls:
+    - secretName: nicklab-org-tls
+      hosts:
+        - local.prowlarr.nicklab.org
   rules:
     - host: local.prowlarr.nicklab.org
       http:
@@ -24,6 +28,10 @@ metadata:
   namespace: rrstack
 spec:
   ingressClassName: traefik
+  tls:
+    - secretName: nicklab-org-tls
+      hosts:
+        - local.sabnzbd.nicklab.org
   rules:
     - host: local.sabnzbd.nicklab.org
       http:
@@ -43,6 +51,10 @@ metadata:
   namespace: rrstack
 spec:
   ingressClassName: traefik
+  tls:
+    - secretName: nicklab-org-tls
+      hosts:
+        - local.radarr.nicklab.org
   rules:
     - host: local.radarr.nicklab.org
       http:
@@ -62,6 +74,10 @@ metadata:
   namespace: rrstack
 spec:
   ingressClassName: traefik
+  tls:
+    - secretName: nicklab-org-tls
+      hosts:
+        - local.sonarr.nicklab.org
   rules:
     - host: local.sonarr.nicklab.org
       http:
