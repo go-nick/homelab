@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nicklab-org-tls
+  namespace: cert-manager
+spec:
+  secretName: nicklab-org-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  dnsNames:
+    - "*.nicklab.org"
+    - "nicklab.org"
