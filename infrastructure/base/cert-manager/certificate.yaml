@@ -16,4 +16,8 @@ spec:
   dnsNames:
     - "*.nicklab.org"
     - "nicklab.org"
-    - "*.local.nicklab.org"
+    - "local.adguard.nicklab.org"
+    - "local.prowlarr.nicklab.org"
+    - "local.sabnzbd.nicklab.org"
+    - "local.radarr.nicklab.org"
+    - "local.sonarr.nicklab.org"
