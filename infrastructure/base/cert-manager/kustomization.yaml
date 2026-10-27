@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - ocirepository.yaml
   - helmrelease.yaml
+  - clusterissuer-staging.yaml
