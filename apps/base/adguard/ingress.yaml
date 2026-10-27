@@ -5,6 +5,10 @@ metadata:
   namespace: adguard
 spec:
   ingressClassName: traefik
+  tls:
+    - secretName: nicklab-org-tls
+      hosts:
+        - local.adguard.nicklab.org
   rules:
     - host: local.adguard.nicklab.org
       http:
