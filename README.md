@@ -59,6 +59,23 @@ homelab/
 └── tests/                      # validation before promotion
 ```
 
+## Operations
+
+Common Flux operations are wrapped in a [`justfile`](https://github.com/casey/just) — install `just`, then:
+
+```
+just              # list all recipes with descriptions
+just kustomizations          # status of every Flux Kustomization
+just reconcile                # force an immediate reconcile
+just suspend <name>           # pause reconciliation (e.g. while debugging live)
+just resume <name>            # resume it
+just build <name>             # render a root Kustomization as Flux would, nothing applied
+just kbuild <path>            # plain offline `kustomize build` on a leaf path
+just interval <hours>         # bulk-set the reconcile interval on all root Kustomizations
+```
+
+Run `just kustomizations` to find the Kustomization names `suspend`/`resume`/`build` expect.
+
 ## Design Patterns
 
 All ports must be named following the pattern: 
