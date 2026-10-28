@@ -7,7 +7,7 @@ spec:
   interval: 1h
   url: oci://ghcr.io/emberstack/helm-charts/reflector
   ref:
-    tag: 10.0.69
+    tag: 10.0.70
   layerSelector:
     mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
     operation: extract
