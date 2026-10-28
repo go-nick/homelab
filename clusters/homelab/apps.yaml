@@ -6,10 +6,10 @@ metadata:
 spec:
   dependsOn:
     - name: infrastructure
-  interval: 10m0s
+  interval: 48h0m0s
   retryInterval: 1m
   timeout: 5m
-  sourceRef: 
+  sourceRef:
     kind: GitRepository
     name: flux-system
   path: ./apps/staging
@@ -18,4 +18,3 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-
