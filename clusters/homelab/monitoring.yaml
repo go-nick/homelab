@@ -4,10 +4,10 @@ metadata:
   name: monitoring
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 48h0m0s
   retryInterval: 1m
   timeout: 5m
-  sourceRef: 
+  sourceRef:
     kind: GitRepository
     name: flux-system
   path: ./monitoring/controllers/staging
@@ -26,7 +26,7 @@ spec:
   interval: 1m0s
   retryInterval: 1m
   timeout: 5m
-  sourceRef: 
+  sourceRef:
     kind: GitRepository
     name: flux-system
   path: ./monitoring/configs/staging
@@ -34,4 +34,4 @@ spec:
   decryption:
     provider: sops
     secretRef:
-        name: sops-age
+      name: sops-age

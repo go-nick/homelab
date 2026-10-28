@@ -6,7 +6,7 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 1m0s # Never touch this!
   ref:
     branch: master
   secretRef:
@@ -19,7 +19,7 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 48h0m0s
   path: ./clusters/homelab
   prune: true
   sourceRef:
