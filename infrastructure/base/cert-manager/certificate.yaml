@@ -9,7 +9,7 @@ spec:
     annotations:
       reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
       reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "homarr,linkding,rrstack,zot,adguard"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "homarr,linkding,rrstack,zot,adguard,cattle-system"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
