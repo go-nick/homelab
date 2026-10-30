@@ -71,7 +71,7 @@ spec:
         - name: homarr
           securityContext:
             {}
-          image: "ghcr.io/homarr-labs/homarr:v2.10.0"
+          image: "ghcr.io/homarr-labs/homarr:v2.10.1"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
