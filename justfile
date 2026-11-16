@@ -59,3 +59,7 @@ build kustomizationName:
 kbuild path:
     kustomize build {{ path }}
 
+# Irreversibly wipe every chart/image on the zot OCI registry (asks for confirmation first). See scripts/zot-wipe.sh
+zot-wipe:
+    ./scripts/zot-wipe.sh
+
